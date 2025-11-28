@@ -1,0 +1,15 @@
+New-PnPAzureCertificate -OutPfx C:/Temp/pnp.pfx -OutCert C:/Temp/pnp.cer -CertificatePassword (ConvertTo-SecureString -String "passwoed" -AsPlainText -Force)
+
+[Wednesday 3:12 PM] Стукало Дмитрий Валериевич
+New-PnPAzureCertificate -OutPfx /Users/dima/pnp.pfx -OutCert /Users/dima/pnp.cer -CertificatePassword (ConvertTo-SecureString -String "passwoed" -AsPlainText -Force)
+[Wednesday 3:13 PM] Стукало Дмитрий Валериевич
+$clientId = "e894b393-f80a-4c1a-88f2-1e0dfbdd26fb"
+$SiteUrl = "https://smartholdingcom.sharepoint.com"
+# $adminCenter = "https://smartholdingcom-admin.sharepoint.com"
+$tenant = "smartholdingcom.onmicrosoft.com"
+$print = "EA336EB8075E3F0286967C02B11C807475FF9402"
+ 
+# Connect-PnPOnline -CertificatePath /Users/dima/pnp.pfx -Tenant $tenant -ClientId $clientId -Url $SiteUrl
+#Connect-PnPOnline -Tenant $tenant -ClientId $clientId -Thumbprint $print -Url $SiteUrl
+ 
+Connect-PnPOnline $SiteUrl -ClientId $clientId -Tenant $tenant -CertificatePath '/Users/dima/pnp.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText -Force "password")

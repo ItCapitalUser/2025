@@ -1,0 +1,5 @@
+https://www.sharepointdiary.com/2018/09/sharepoint-online-site-collection-permission-report-using-powershell.html
+https://www.sharepointdiary.com/2016/02/powershell-to-delete-unique-permissions-for-all-list-items-sharepoint-online.html
+https://www.sharepointdiary.com/2017/03/sharepoint-online-get-all-list-items-with-unique-permissions-using-powershell.html
+
+https://www.sharepointdiary.com/2018/09/sharepoint-online-powershell-to-get-unique-permissions-report.html

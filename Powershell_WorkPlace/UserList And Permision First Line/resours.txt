@@ -1,0 +1,11 @@
+https://www.sharepointdiary.com/2019/01/sharepoint-online-update-permission-level-using-powershell.html
+https://www.sharepointdiary.com/2020/12/get-user-effective-permissions-in-sharepoint-online-using-powershell.html
+https://www.sharepointdiary.com/2019/01/sharepoint-online-update-permission-level-using-powershell.html
+
+https://www.sharepointdiary.com/2016/11/sharepoint-online-powershell-to-create-permission-level.html
+
+https://learn.microsoft.com/ru-ru/previous-versions/office/sharepoint-csom/ee536458(v=office.15)
+
+https://www.sharepointdiary.com/2018/03/sharepoint-online-powershell-to-get-folder-permissions.html
+https://www.sharepointdiary.com/2017/11/sharepoint-online-grant-permission-to-list-item-using-powershell.html
+https://www.sharepointdiary.com/2018/09/sharepoint-online-get-user-permission-report-using-powershell.html

@@ -1,0 +1,39 @@
+	
+Get-Module -Name Microsoft.Online.SharePoint.PowerShell -ListAvailable | Select Name,Version 
+
+#Variables for Processing
+$AdminUrl = "https://smartholdingcom-admin.sharepoint.com/"
+$UserName= "spsitecoladm@smart-holding.com"
+$Password = ""
+  
+#Setup Credentials to connect
+$SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
+$Credentials = New-Object -TypeName System.Management.Automation.PSCredential -argumentlist $UserName, $SecurePassword
+ 
+#connect to the service
+Connect-SPOService -Url $AdminUrl -Credential $Credentials
+
+$SiteColl = Get-SPOSite -Limit ALL 
+$SiteCollectionAdmin = "admin.morozov@smartholdingcom.onmicrosoft.com"
+ 
+ 
+#sharepoint online PowerShell iterate through all site collections
+ForEach($Site in $SiteColl)
+{
+    Write-host $Site.Url
+    $SiteCollURL= $Site.Url
+    Set-SPOUser -site $SiteCollURL -LoginName $SiteCollectionAdmin -IsSiteCollectionAdmin $True
+     Write-host "Done"
+}
+
+$SiteCollURL = "https://smartholdingcom.sharepoint.com/sites/testEmptySite"
+
+
+$AdminName = "salaudeen@crescent.onmicrosoft.com"
+$SiteCollURL = "https://smartholdingcom.sharepoint.com/sites/SH_TOP_238-28"
+$SiteCollURL = "https://smartholdingcom.sharepoint.com/sites/SH_TOP_381-27"
+
+$SiteCollectionAdmin = "spsitecoladm@smart-holding.com"
+
+
+Set-SPOUser -site $SiteCollURL -LoginName $SiteCollectionAdmin -IsSiteCollectionAdmin $True

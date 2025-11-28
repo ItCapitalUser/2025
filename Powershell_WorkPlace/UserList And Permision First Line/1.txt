@@ -1,0 +1,8 @@
+EmptyMask
+ViewFormPages
+Open
+ViewPages
+BrowseUserInfo
+UseRemoteAPIs
+EditMyUserInfo
+EnumeratePermissions

@@ -1,0 +1,16 @@
+$AdminUrl = "https://smartholdingcom-admin.sharepoint.com/"
+$UserName= "spsitecoladm@smart-holding.com"
+$Password = "uZ#RJpSS2%U9!PR"
+  
+#Setup Credentials to connect
+$SecurePassword = $Password | ConvertTo-SecureString -AsPlainText -Force
+$Credentials = New-Object -TypeName System.Management.Automation.PSCredential -argumentlist $UserName, $SecurePassword
+ 
+#connect to the service
+Connect-SPOService -Url $AdminUrl -Credential $Credentials
+
+$SiteColl = Get-SPOSite -Limit All 
+
+  $data=   $SiteColl |  Where-Object  {$_.Template -contains "BDR#0" -or $_.Template -contains "STS#0" -or $_.Template -contains "SITEPAGEPUBLISHING#0" -or $_.Template -contains "GROUP#0" -or $_.Template -contains "TEAMCHANNEL#0" -or $_.Template -contains "TEAMCHANNEL#1" }| Select-Object  -Property  URl, Template 
+    $CSVPath = "C:\Users\vira.chorna\Documents\temp\allSite220924_2.csv"
+    $data | Export-Csv -Path $CSVPath -Force -NoTypeInformation -Encoding UTF8
