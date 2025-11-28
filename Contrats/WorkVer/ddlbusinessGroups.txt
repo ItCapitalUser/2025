@@ -1,0 +1,45 @@
+- ddl_businessGroups:
+    Control: Classic/DropDown@2.3.1
+    Properties:
+      AllowEmptySelection: =true
+      BorderColor: =RGBA(166, 166, 166, 1)
+      BorderThickness: =1
+      ChevronBackground: =RGBA(255, 255, 255, 1)
+      ChevronDisabledBackground: =RGBA(244, 244, 244, 1)
+      ChevronDisabledFill: =RGBA(166, 166, 166, 1)
+      ChevronFill: =RGBA(33, 33, 33, 1)
+      ChevronHoverBackground: =RGBA(212, 212, 212, 1)
+      ChevronHoverFill: =RGBA(33, 33, 33, 1)
+      Color: =RGBA(51, 51, 51, 1)
+      Default: =Parent.Default
+      DisabledBorderColor: =RGBA(0, 0, 0, 0)
+      FocusedBorderThickness: =1
+      Font: =Font.'Segoe UI'
+      Height: =txt_business.Height
+      HoverBorderColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+      HoverColor: =RGBA(51, 51, 51, 1)
+      HoverFill: =RGBA(212, 212, 212, 1)
+      Items: |-
+        =SortByColumns(
+                Filter(
+                    Dir_comp_groups,
+                    !IsBlank(GroupPermission)
+                ),
+                "IdSort"
+            )
+      Items.Value: =Title
+      OnChange: =If(glbEditForm=true, Set(varChangeBusinessGroup, 2))
+      PaddingBottom: =5
+      PaddingLeft: =12
+      PaddingRight: =5
+      PaddingTop: =5
+      PressedBorderColor: =ColorFade(RGBA(0, 120, 212, 1), -30%)
+      PressedColor: =RGBA(255, 255, 255, 1)
+      PressedFill: =RGBA(0, 120, 212, 1)
+      SelectionColor: =RGBA(255, 255, 255, 1)
+      SelectionFill: =RGBA(0, 120, 212, 1)
+      Size: =10.5
+      Visible: =If(glbViewForm = 0,  true, false)
+      Width: =txt_business.Width
+      X: =txt_business.X
+      Y: =txt_business.Y

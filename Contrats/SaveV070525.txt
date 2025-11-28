@@ -1,0 +1,156 @@
+//SubmitForm(SharePointForm1)
+If(
+    SharePointForm1.Mode = FormMode.New,
+    Set(
+        RecordInList,
+        Defaults([@ContractsHR])
+    ),
+    If(
+        SharePointForm1.Mode = FormMode.Edit,
+        Set(
+            RecordInList,
+            SharePointIntegration.Selected
+        )
+    )
+);
+Set(nameGroupHr, cmb_businessGroups.Selected.GroupPermission);
+/*If(
+    And(
+        glbEditForm = true,
+        Value(lb_idMainDoc.Text) <> 0
+    ),
+    Set(
+        varIdMainDoc,
+        cmb_numMainDoc.Selected.ID
+    );
+    Set(
+        varNumMainDoc,
+        cmb_numMainDoc.Selected.'Ім’я'
+    ),
+    Set(
+        varIdMainDoc,
+        0
+    );
+    Set(
+        varNumMainDoc,
+        "0"
+    )
+);*/
+If(
+    Value(lb_idMainDoc.Text) = 0,
+    Set(
+        varIdMainDoc,
+        0
+    );
+    Set(
+        varNumMainDoc,
+        txt_NumDoc.Text
+    ),
+    Set(
+        varIdMainDoc,
+        cmb_numMainDoc.Selected.ID
+    );
+    Set(
+        varNumMainDoc,
+        cmb_numMainDoc.Selected.'Ім’я'
+    )
+);
+If(
+    Value(lb_idMainDoc.Text) = 0,
+    If(
+        !IsBlank(cmb_businessGroups.Selected.'Ім’я') && !IsBlank(cmb_company.Selected.'Ім’я') && !IsEmpty(cmb_FullNamePerson.SelectedItems) && !IsBlank(txt_NumDoc.Text) && !IsBlankOrError(DataCardValue21.SelectedDate) && !IsEmpty(DataCardValue28.SelectedItems),
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "Не заповенно всі обов'язкові поля",
+            NotificationType.Error
+        )
+    ),
+    If(
+        !IsBlank(cmb_businessGroups.Selected.'Ім’я') && !IsBlank(cmb_company.Selected.'Ім’я') && !IsEmpty(cmb_FullNamePerson.SelectedItems) && !IsBlank(txt_NumDoc.Text) && !IsBlank(cmb_numMainDoc.Selected.'Ім’я') && !IsBlankOrError(DataCardValue21.SelectedDate) && !IsEmpty(DataCardValue28.SelectedItems),
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "Заповніть, будь ласка, всі обов'язкові поля",
+            NotificationType.Error
+        )
+    )
+);
+If(
+    !IsBlankOrError(DataCardValue22.SelectedDate) && !IsBlankOrError(DataCardValue23.SelectedDate),
+    If(
+        DataCardValue22.SelectedDate < DataCardValue23.SelectedDate,
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "'Термін дії контракту по' менший за 'Термін дії контракту з'. Прохання виправити значення",
+            NotificationType.Error
+        )
+    )
+);
+If(
+    varFillOutRequired = true,
+    Set(
+        varPatchedItem,
+        Patch(
+            [@ContractsHR],
+            RecordInList,
+            {
+                'Номер документа': txt_NumDoc.Text,
+                Бізнес: cmb_businessGroups.Selected.'Ім’я',
+                'Юр особа': cmb_company.Selected.'Ім’я',
+                ПІБ: cmb_FullNamePerson.Selected,
+                Посада: DataCardValue19.Text,
+                'Тип документу': DataCardValue20.Selected,
+                'Дата документу': DataCardValue21.SelectedDate,
+                'Термін дії контракту з': DataCardValue22.SelectedDate,
+                'Термін дії контракту по': DataCardValue23.SelectedDate,
+                'Підписаний Роботодавцем': DataCardValue24.Value,
+                'Підписаний  Працівником': DataCardValue25.Value,
+                'Підписант': DataCardValue28.Selected,
+                'Кількість наявних екземплярів': Value(DataCardValue27.Text),
+                idMainDocList: varIdMainDoc,
+                IdNumMainDoc: varNumMainDoc,
+                'Підписант текст': DataCardValue28.Selected.DisplayName
+            },
+            FormAttachments.Updates
+        )
+    );
+    If(
+        IsEmpty(Errors('ContractsHR')),
+    // on success
+        RequestHide();
+        'SH-HR-Contracts-PemrItem'.Run(nameGroupHr,  varPatchedItem.'Ід-тор');
+        Notify(
+            "Success: Запис збрежено",
+            NotificationType.Success
+        );
+        ResetForm(SharePointForm1);
+        ResetForm(FormAttachments);
+        RequestHide(),
+    // on failure
+        Notify(
+            "Errors: Запис не збережено. ",
+            NotificationType.Error
+        )
+    );
+    
+)

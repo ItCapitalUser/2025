@@ -1,0 +1,33 @@
+If(
+    Value(lb_idMainDoc.Text) = 0,
+    If(
+        !IsBlank(ddl_businessGroups.Selected.Title) && !IsBlank(ddl_company.Selected.Title) && !IsEmpty(cmb_FullNamePerson.SelectedItems) && !IsBlank(txt_NumDoc.Text) && !IsBlankOrError(DataCardValue21.SelectedDate) && !IsEmpty(DataCardValue28.SelectedItems),
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "Не заповенно всі обов'язкові поля",
+            NotificationType.Error
+        )
+    ),
+    If(
+        !IsBlank(ddl_businessGroups.Selected.'Ім’я') && !IsBlank(ddl_company.Selected.'Ім’я') && !IsEmpty(cmb_FullNamePerson.SelectedItems) && !IsBlank(txt_NumDoc.Text) && !IsBlank(ddl_numMainDoc.Selected.'Ім’я') && !IsBlankOrError(DataCardValue21.SelectedDate) && !IsEmpty(DataCardValue28.SelectedItems),
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "Заповніть, будь ласка, всі обов'язкові поля",
+            NotificationType.Error, 1000
+        )
+    )
+);

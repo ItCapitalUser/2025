@@ -1,0 +1,73 @@
+If(
+ IsBlank(Self.Text),
+ {
+ ErrorVisibility: true,
+ ErrorText: "Email cannot be blank!"
+ }
+ ,
+ If(
+ IsBlank(
+ LookUp(
+ Reviewers,
+ Email = Self.Text
+ )
+ ),
+ {
+ ErrorVisibility: false,
+ ErrorText: ""
+ },
+ {
+ ErrorVisibility: true,
+ ErrorText: "Email already exists"
+ }
+ )
+);
+
+If(
+        DataCardValue22.SelectedDate < DataCardValue23.SelectedDate,
+        Set(
+            ErrorVisibilityСomparison,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+       
+    )
+	
+	_api/web/lists/getByTitle(‘@{variables(‘strListTitle’)}’)/items()/roleAssignments/groups/removebyid(?[‘G_BreakInherance Members’]}
+	
+	 If(
+        DataCardValue22.SelectedDate < DataCardValue23.SelectedDate,
+        Set(
+            varFillOutRequired,
+            true
+        ),
+        Set(
+            varFillOutRequired,
+            false
+        );
+        Notify(
+            "'Термін дії документу по' менший за 'Термін дії документу з'. Прохання виправити значення",
+            NotificationType.Error, 1000
+        )
+    )
+	
+	If(
+    IsBlank(Self.Text),
+    UpdateContext({ErrorVisibility: true});
+    UpdateContext({ErrorText: "Поле є обов'язковим"}),
+    If(
+        IsBlank(
+            LookUp(
+                ContractsHR,
+                'Номер документа' = Self.Text
+            )
+        ),
+        UpdateContext({ErrorVisibFromContractTerm: false});
+        UpdateContext({ErrorText: ""}),
+        UpdateContext({ErrorVisibility: true});
+        UpdateContext({ErrorText: "З таким номером документу вже збережено запис"})
+    )
+);

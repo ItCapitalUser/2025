@@ -1,0 +1,104 @@
+If(
+    SharePointForm1.Mode = FormMode.New,
+    Set(
+        RecordInList,
+        Defaults([@События])
+    ),
+    If(
+        SharePointForm1.Mode = FormMode.Edit,
+        Set(
+            RecordInList,
+            SharePointIntegration.Selected
+        )
+    )
+);If (
+    ( IsBlank(PersonValue.SelectedItems.Value) || IsBlank(EventValue.SelectedItems.Value) ||IsBlank(DateEventValue.SelectedDate)),
+    Notify(
+        "Пожалуйста, заполните все обязательные для заполнения поля.",
+        NotificationType.Error
+    ),
+    Patch(
+            [@События],
+            RecordInList,
+            {
+                Заголовок: Concatenate(
+                    EventValue.Selected.Value,
+                    " ",
+                    PersonValue.Selected.Value
+                ),
+                Events: {
+                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                    Value: EventValue.Selected.Value
+                },
+                Activities: ActivitiesValue.SelectedItems,
+                Person: {
+                    '@odata.type': "#Microsoft.Azure.Connectors.SharePoint.SPListExpandedReference",
+                    Id: PersonValue.Selected.Id,
+                    Value: PersonValue.Selected.Value
+                }, 
+                AdditInformEvent: AdditInformEventValue.Text,
+                DateEvents: Text(
+                    DateEventValue.SelectedDate,
+                    "[$-en-US]dd.mm"
+                ),
+                ddEvent: Text(
+                    DateEventValue.SelectedDate,
+                    "[$-en-US]dd"
+                ),
+                mmEvent: Text(
+                    DateEventValue.SelectedDate,
+                    "[$-en-US]mm"
+                ), SystDateEvents: DateEventValue.SelectedDate
+            }, SharePointForm1.Updates
+        );
+    ResetForm(SharePointForm1);
+    RequestHide()
+);
+
+OnChange Datapicker
+
+If(
+    IsBlank(DataCardValue21.SelectedDate),
+    Notify(
+            "Не вірна дата 1 у полі 'Дата документа'",
+            NotificationType.Error,
+            20000
+        ),
+    If(
+        IsBlank(Text(DataCardValue21.SelectedDate)),
+        Notify(
+            "Не вірна дата у полі 'Дата документа'",
+            NotificationType.Error,
+            20000
+        );
+        Set(
+            varDateDocErr,
+            true
+        ),
+        Set(
+            varDateDocErr,
+            false
+        )
+    )
+)
+
+If(IsBlank(Text(DataCardValue21.SelectedDate)),"Not Date", "Date")
+
+If(
+   !IsBlankOrError(DataCardValue22.SelectedDate) && !IsBlankOrError(DataCardValue23.SelectedDate),
+   If(
+        
+        DataCardValue22.SelectedDate<DataCardValue23.SelectedDate,
+        Set(
+            varResult,
+            "Correct"
+        ),
+        Set(
+            varResult,
+            "Nooooo"
+        )
+   
+   )
+)
+
+

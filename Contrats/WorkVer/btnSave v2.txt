@@ -1,0 +1,134 @@
+/*If(
+    !IsBlank(cmb_businessGroups.Selected.'Ім’я') && !IsBlank(cmb_company.Selected.'Ім’я') && !IsEmpty(cmb_FullNamePerson.SelectedItems) && !IsBlank(txt_NumDoc.Text) && !IsBlankOrError(DataCardValue21.SelectedDate) && !IsEmpty(DataCardValue28.SelectedItems) ,
+   
+        Set(
+            varResult,
+            "Correct"
+        ),
+        Set(
+            varResult,
+            "Nooooo"
+        )
+   
+   
+)*/
+
+Concurrent(
+If(IsBlank(ddl_businessGroups.SelectedText),
+    UpdateContext({ErrorVisibBussGroup: true});
+    
+    UpdateContext({ErrorTextBussGroup: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibBussGroup: false});
+    UpdateContext({ErrorTextBussGroup: ""});
+    
+),
+If(IsBlank(ddl_company.Selected),
+    UpdateContext({ErrorVisibComp: true});
+    UpdateContext({ErrorTextComp: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibComp: false});
+    UpdateContext({ErrorTextComp: ""})
+),
+If(IsBlank(ddl_numMainDoc.Selected),
+    UpdateContext({ErrorVisibNumMainDoc: true});
+    UpdateContext({ErrorTextNumMainDoc: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibNumMainDoc: false});
+    UpdateContext({ErrorTextNumMainDoc: ""})
+),
+If(IsBlank(cmb_FullNamePerson.SelectedItems),
+    UpdateContext({ErrorVisibPIB: true});
+    UpdateContext({ErrorTextPIB: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibPIB: false});
+    UpdateContext({ErrorTextPIB: ""})
+),
+
+If(
+    IsBlank(txt_NumDoc.Text),
+    UpdateContext({ErrorVisibility: true});
+    UpdateContext({ErrorText: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibility: false});
+    UpdateContext({ErrorText: ""})
+),
+If(IsBlankOrError(DataCardValue21.SelectedDate),
+    UpdateContext({ErrorVisibDateContract: true});
+    UpdateContext({ErrorTextDateContract: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibDateContract: false});
+    UpdateContext({ErrorTextDateContract: ""})
+),
+If(IsBlank(DataCardValue28.SelectedItems),
+    UpdateContext({ErrorVisibSignUser: true});
+    UpdateContext({ErrorTextSignUser: "Поле є обов'язковим"}),
+    UpdateContext({ErrorVisibSignUser: false});
+    UpdateContext({ErrorTextSignUser: ""})
+));
+
+If( And(ErrorVisibBussGroup = false, ErrorVisibComp = false, Or(ErrorVisibNumMainDoc = false, Value(lb_idMainDoc.Text) = 0), ErrorVisibPIB =false, ErrorVisibility =false, ErrorVisibDateContract = false, ErrorVisibSignUser=false,ErrorVisibFromContractTerm=false,ErrorVisibToContractTerm=false), 
+Set(varTest, "Save"),
+Set(varTest, "Blank")
+)
+
+If(IsBlank(Self.SelectedText),
+    Set(ErrorVisibBussGroup, true);
+    Set(ErrorTextBussGroup, "Поле є обов'язковим"),
+    Set(ErrorVisibBussGroup, false);
+    Set(ErrorTextBussGroup, "")
+)
+
+If(IsBlankOrError(Self.SelectedDate),
+    Set(ErrorVisibDateContract, true);
+    Set(ErrorTextDateContract, "Поле є обов'язковим"),
+    Set(ErrorVisibDateContract, false);
+    Set(ErrorTextDateContract, "")
+)
+
+If(IsBlank(Self.Selected),
+    
+    Set(ErrorVisibSignUser, true);
+    Set(ErrorTextSignUser, "Поле є обов'язковим"),
+    Set(ErrorVisibSignUser, false);
+    Set(ErrorTextSignUser, "")
+)
+
+If(IsBlank(Self.Selected),
+    
+    Set(ErrorVisibPIB, true);
+    Set(ErrorTextPIB, "Поле є обов'язковим"),
+    Set(ErrorVisibPIB, false);
+    Set(ErrorTextPIB, "")
+)
+
+
+If(
+    Or(IsBlankOrError(Self.SelectedDate), IsBlankOrError(DataCardValue23.SelectedDate)),
+    UpdateContext({ErrorVisibFromContractTerm: false});
+    UpdateContext({ErrorTextFromContractTerm: ""});
+    UpdateContext({ErrorVisibToContractTerm: false});
+    UpdateContext({ErrorTextToContractTerm: ""}),
+    If(
+        Self.SelectedDate < DataCardValue23.SelectedDate,
+        UpdateContext({ErrorVisibFromContractTerm: false});
+        UpdateContext({ErrorTextFromContractTerm: ""});
+        UpdateContext({ErrorVisibToContractTerm: false});
+        UpdateContext({ErrorTextToContractTerm: ""}),
+        UpdateContext({ErrorVisibFromContractTerm: true});
+        UpdateContext({ErrorTextFromContractTerm: "Дата більша за дату у полі 'Термін дії документу по'"})
+    );
+    
+)
+
+If(
+    Or(IsBlankOrError(Self.SelectedDate),IsBlankOrError(DataCardValue22.SelectedDate)),
+    Set(ErrorVisibFromContractTerm, false);
+    Set(ErrorTextFromContractTerm, "");
+    Set(ErrorVisibToContractTerm, false);
+    Set(ErrorTextToContractTerm, ""),
+    If(
+        DataCardValue22.SelectedDate < Self.SelectedDate,
+        Set(ErrorVisibFromContractTerm, false);
+        Set(ErrorTextFromContractTerm, "");
+        Set(ErrorVisibToContractTerm, false);
+        Set(ErrorTextToContractTerm, ""),
+        Set(ErrorVisibToContractTerm, true);
+        Set(ErrorTextToContractTerm, "Дата менша за 'Термін дії документу з'")
+    );
+    
+)

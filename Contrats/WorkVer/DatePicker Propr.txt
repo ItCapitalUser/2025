@@ -1,0 +1,26 @@
+- DataCardValue21:
+    Control: Classic/DatePicker@2.6.0
+    Properties:
+      BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+      BorderThickness: =1
+      Color: =RGBA(51, 51, 51, 1)
+      ContentLanguage: ="uk-UA"
+      DefaultDate: =Parent.Default
+      DisabledBorderColor: =RGBA(0, 0, 0, 0)
+      DisplayMode: =Parent.DisplayMode
+      EndYear: =Year(Today())+100
+      FocusedBorderThickness: =1
+      Font: =Font.'Segoe UI'
+      Format: =gblFormatDateInForm
+      IconBackground: =RGBA(0, 120, 212, 1)
+      IconFill: =RGBA(255, 255, 255, 1)
+      IsEditable: =true
+      PaddingBottom: =0
+      PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+      Size: =10.5
+      StartOfWeek: =StartOfWeek.Monday
+      StartYear: =1990
+      Tooltip: =Parent.DisplayName
+      Width: =Parent.Width - 60
+      X: =32
+      Y: =DataCardKey21.Y + DataCardKey21.Height + 5
