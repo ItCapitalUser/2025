@@ -1,0 +1,297 @@
+$userName = "spsitecoladm@smart-holding.com"
+$password = "uZ#RJpSS2%U9!PR"
+$secureStringPwd = $password | ConvertTo-SecureString -AsPlainText -Force 
+$creds = New-Object System.Management.Automation.PSCredential -ArgumentList $userName, $secureStringPwd
+
+$emailUser = "yevhen.shevchenko@smart-holding.com"
+$AdminURL = "https://smartholdingcom-admin.sharepoint.com"
+
+$arr_SiteUrl = @(
+"https://smartholdingcom.sharepoint.com/sites/CorporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/cs",
+"https://smartholdingcom.sharepoint.com/sites/msteams_43f3d6-Security",
+"https://smartholdingcom.sharepoint.com/sites/msteams_e28c32-Security",
+"https://smartholdingcom.sharepoint.com/sites/naval_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/se_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/SE_SEC_278",
+"https://smartholdingcom.sharepoint.com/sites/SE_SEC_378",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity--",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-12",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-16",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity--2022",
+"https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-34",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-._0248_",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-04._0091_",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-05.__0465",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-06.__0465_",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-06.__0466",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-07.AL_8323",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-07.CX__0600_",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-CE.CriminalCase",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-Courts",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-CriminalCaseRegister",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-PR_GR",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_013-SH_WilmerHale",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_015",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_016",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_017",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_017-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_018",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_019",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_020",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_021",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_021-DataRoomForum",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-_0248_111-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-_0251",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-_0455_212",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-2402",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-Brother",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-Citizen",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-K2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-Sanctions",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_022-Vag_2022",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-HR",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-IFS",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-Naval",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-SH_CEO",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-SmartEnergy",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-Smart-Holding",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-SmartTrust_StepTrust",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-SmartUrban",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-SMG",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-Strategy",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_023-Veres",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-SMARTGROUP",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_025",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_026-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_027",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028--1",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-CriminalCase_0281_",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-Improvement",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-1.Physicalinventory",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-10",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-3.Team",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Archive",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-HR",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Land",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-NavalCorporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Navalregistrationactions",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Ochakiv",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-PR",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Shelters",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Tranfser",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-VendorDD",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_029-Watershed",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-02",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-05",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-06",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-07",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-_2022-1",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-55",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-83",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-Improvement",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034--",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-__",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-21",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-3",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-82",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-94",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-RP_111",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_043",
+"https://smartholdingcom.sharepoint.com/sites/sh-cs-verifications",
+"https://smartholdingcom.sharepoint.com/sites/SU_SEC_142",
+"https://smartholdingcom.sharepoint.com/sites/SU_SEC_142-",
+"https://smartholdingcom.sharepoint.com/sites/sus_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/tacticalIF_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/veres_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/VERES_SEC_096",
+"https://smartholdingcom.sharepoint.com/sites/corporatesecurity2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_012",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_012-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_012-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_012-Criminal",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-05",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-06",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-08",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-09",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-35",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-60",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_024-61",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_026",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-01",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-02",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-05",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-06",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-07",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_028-Investigation_NP",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-01",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-02",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-05",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-06",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-07",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_030-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-01",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_031-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-01",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-02",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-05",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-052",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-07",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_032-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_033",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-03",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-04.-",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-07",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-19",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-31",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-65",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-66",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-71",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-Confidential",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-Test2",
+"https://smartholdingcom.sharepoint.com/sites/SH_SEC_034-UGV_82",
+"https://smartholdingcom.sharepoint.com/sites/smg_corporateSecurity",
+"https://smartholdingcom.sharepoint.com/sites/-.CorporateSecurityBook",
+"https://smartholdingcom.sharepoint.com/sites/-_CorporateSecurityBook",
+"https://smartholdingcom.sharepoint.com/sites/C.-_CorporateSecurityBook",
+"https://smartholdingcom.sharepoint.com/sites/-C_CorporateSecurityBook",
+"https://smartholdingcom.sharepoint.com/sites/-CE_CorporateSecurityBook"
+
+)
+
+Connect-SPOService -url $AdminURL -credential $creds
+
+$SiteURL= "https://smartholdingcom.sharepoint.com/sites/SE_SEC_278"
+
+(Get-SPOSite -Identity $SiteURL).GroupId #.Template
+
+Connect-MicrosoftTeams -Credential $creds
+
+
+
+Try {
+
+    $allTeams = Get-Team
+         
+        Foreach ($team in $allTeams)
+        {
+            #Collect Team Data
+            $teamGroupId = $team.GroupId.ToString()
+            $teamChannels = Get-TeamChannel -GroupId $teamGroupId | Select-Object -Property DisplayName
+            $teamChannelsName = $teamChannels | Foreach {"$($_.DisplayName)"}     
+            $joinedTeamChannels = [String]::Join('; ',$teamChannelsName)  
+            $teamOwners = Get-TeamUser -GroupId $teamGroupId  | Where {$_.Role -eq 'Owner'}
+            $teamMember =  Get-TeamUser -GroupId $teamGroupId  | Where {$_.Role -eq 'Member'}
+
+            $global:teamData += [PSCustomObject] @{
+                TeamName        = $team.DisplayName
+                url = $team.
+                TeamID          = $teamGroupId
+                MailAlias       = $team.MailNickName
+                TeamType        = $team.Visibility
+                TeamArchived = $team.Archived
+                TeamDescription = $team.Description
+
+                
+                TeamChannels    = $joinedTeamChannels
+                TeamOwners      = $teamOwners.Name -join '; '
+                TeamOwnersEmails = $teamOwners.User -join '; '
+                TeamMembers     = $teamMember.Name -join '; '
+                TeamMembersEmails = $teamMember.User -join '; '
+                CountTeamOwners=  $teamOwners.Count
+                CountTeamMember =  $teamMember.Count
+            }
+        }
+}
+Catch {
+    write-host -f Red "Error  block get teams!" $_.Exception.Message
+}
+
+try
+{
+   foreach($site in $arr_SiteUrl)
+    {
+        #Write-Host $site -f Yellow
+        $templ= (Get-SPOSite -Identity $site).Template
+
+        #Write-Host   $templ
+
+        if($templ -like "GROUP#0")
+        {
+           <# $idGroup = (Get-SPOSite -Identity $site).GroupId
+
+            Add-TeamUser -GroupId $idGroup -User $emailUser -Role Owner
+            Write-Host "Add Owner" -f Green#>
+        }
+        elseif ($templ -like "*TEAMCHANNEL#*")
+        {
+            Write-Host $site -f Yellow
+            (Get-SPOSite -Identity $site).Title
+          <#Write-Host "chanel" -f Red
+            (Get-SPOSite -Identity $site).Title
+            $titleChannel =(Get-SPOSite -Identity $site).Title
+             Write-Host 
+            $CommaIndex = $titleChannel.IndexOf('-')
+            $channelName = $titleChannel.Substring($CommaIndex + 1)
+            $teamName = $titleChannel.Substring(0, $CommaIndex)
+            Write-Host $channelName, $teamName -f Blue
+
+            $teamId = (Get-Team -DisplayName $teamName).MailNickName GroupId
+
+
+            Get-TeamChannelUser -GroupId f4ac8ca4-15df-457e-809f-cb325b8f3982 -DisplayName "Корпоративна розвідка" -User $emailUser -Role Owner
+             Write-Host "Add Owner" -f Green#>
+        }
+        elseif ($templ -like "SITEPAGEPUBLISHING#0")
+        {
+            <#Write-Host "site" -f red
+            Set-SPOUser -site $site -LoginName $emailUser -IsSiteCollectionAdmin $True
+             Write-Host "Add Owner" -f Green#>
+        }
+        else 
+        {
+            #Write-Host "other" -f Red
+                        #Set-SPOUser -site $site -LoginName $emailUser -IsSiteCollectionAdmin $True
+
+        } 
+    }
+}
+Catch {
+    write-host -f Red "Error  block get !" $_.Exception.Message
+}
+

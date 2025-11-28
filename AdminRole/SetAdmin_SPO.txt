@@ -1,0 +1,15 @@
+$AdminURL = "https://smartholdingcom-admin.sharepoint.com"
+$AdminName = "spsitecoladm@smart-holding.com"
+$SiteCollURL = "https://smartholdingcom.sharepoint.com/sites/SH_CorporateSecurity-16"
+$SiteCollectionAdmin = "testsh1@smart-holding.com"#"spsitecoladm@smart-holding.com"
+
+ 
+$Credential = Get-Credential
+  
+#Connect to SharePoint Online
+Connect-SPOService -url $AdminURL -credential $Credential
+ 
+#Add Site collection Admin
+Set-SPOUser -site $SiteCollURL -LoginName $SiteCollectionAdmin -IsSiteCollectionAdmin $True
+
+Get-SPOUser -Site $SiteCollURL | Where-Object { $_.IsSiteAdmin -eq $True }
